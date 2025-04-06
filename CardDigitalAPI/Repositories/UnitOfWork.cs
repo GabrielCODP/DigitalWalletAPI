@@ -6,6 +6,7 @@ namespace CardDigitalAPI.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         public IClientRepository? _clientRepo;
+        public IBuyerRepository? _buyerRepo;
 
         public AppDbContext _context;
 
@@ -25,9 +26,19 @@ namespace CardDigitalAPI.Repositories
             }
         }
 
+        public IBuyerRepository BuyerRepository
+        {
+            get
+            {
+                return _buyerRepo = _buyerRepo ?? new BuyerRepository(_context);
+            }
+        }
+
+
+
         public async Task CommitAsync()
         {
-           await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
         }
 
         public async Task Dispose()
@@ -36,6 +47,6 @@ namespace CardDigitalAPI.Repositories
         }
     }
 
-   
+
 }
 

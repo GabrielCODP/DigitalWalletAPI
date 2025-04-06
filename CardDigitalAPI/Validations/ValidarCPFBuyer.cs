@@ -11,12 +11,11 @@ namespace CardDigitalAPI.Validations
             string regexCPF = @"^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$";
 
 
-
             if (value is string cpf && Regex.IsMatch(cpf, regexCPF))
             {
-                if (cpf.Contains(".") || cpf.Contains("-"))
+                if(cpf.Distinct().Count() == 1)
                 {
-                    cpf = cpf.Replace(".", "").Replace("-", "");
+                    return new ValidationResult("CPF inválido.");
                 }
 
                 int somaPrimeiroVerificadorCPF = 0;
@@ -24,7 +23,7 @@ namespace CardDigitalAPI.Validations
 
                 for (int i = 0; i < cpf.Length - 2; i++)
                 {
-                    somaPrimeiroVerificadorCPF += (int)cpf[i] * multiplicadorCPF;
+                    somaPrimeiroVerificadorCPF += (int.Parse(cpf[i].ToString()) * multiplicadorCPF);
                     multiplicadorCPF++;
                 }
 
@@ -35,15 +34,24 @@ namespace CardDigitalAPI.Validations
 
                 for (int i = 0; i < cpf.Length - 1; i++)
                 {
-                    somaSegundoVerificadorCPF += (int)cpf[i] * multiplicadorCPF;
+                    somaSegundoVerificadorCPF += (int.Parse(cpf[i].ToString()) * multiplicadorCPF);
                     multiplicadorCPF++;
                 }
 
                 double segundoDigitoCPF = somaSegundoVerificadorCPF % 11;
 
-                if (cpf[9] == primeiroDigitoCPF && cpf[10] == segundoDigitoCPF)
+                primeiroDigitoCPF = primeiroDigitoCPF == 10 ? 0 : primeiroDigitoCPF;
+                segundoDigitoCPF = segundoDigitoCPF == 10 ? 0 : segundoDigitoCPF;
+
+                //caclulo asciiCode 
+                // Código ASCII 0 = 48
+                bool cpfValido = (cpf[9] - '0' == primeiroDigitoCPF) && (cpf[10] - '0' == segundoDigitoCPF);
+
+                if (cpfValido)
                 {
+                    value = cpf;
                     return ValidationResult.Success;
+
                 }
 
             }

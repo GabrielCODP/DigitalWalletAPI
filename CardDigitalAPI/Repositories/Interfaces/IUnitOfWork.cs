@@ -4,6 +4,8 @@
     {
         //Instancia dos repositorios
         IClientRepository ClientRepository { get; }
+        IBuyerRepository BuyerRepository { get; }
+
         Task CommitAsync();
     }
 }
