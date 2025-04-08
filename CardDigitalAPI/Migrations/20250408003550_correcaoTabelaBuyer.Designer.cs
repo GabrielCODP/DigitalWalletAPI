@@ -4,6 +4,7 @@ using CardDigitalAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardDigitalAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408003550_correcaoTabelaBuyer")]
+    partial class correcaoTabelaBuyer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,11 +56,8 @@ namespace CardDigitalAPI.Migrations
                         .HasMaxLength(48)
                         .HasColumnType("varchar(48)");
 
-                    b.Property<bool>("BoletoPago")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime(6)");
+                    b.Property<string>("ExpirationDate")
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
@@ -156,9 +156,6 @@ namespace CardDigitalAPI.Migrations
                     b.Property<int?>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<bool?>("IsApproved")
                         .HasColumnType("tinyint(1)");
 
@@ -201,7 +198,7 @@ namespace CardDigitalAPI.Migrations
                         .HasForeignKey("CardDigitalAPI.Models.Payment", "BoletoId");
 
                     b.HasOne("CardDigitalAPI.Models.Buyer", "Buyer")
-                        .WithMany()
+                        .WithMany("Payments")
                         .HasForeignKey("BuyerId");
 
                     b.HasOne("CardDigitalAPI.Models.Card", "Card")
@@ -218,6 +215,11 @@ namespace CardDigitalAPI.Migrations
             modelBuilder.Entity("CardDigitalAPI.Models.Boleto", b =>
                 {
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("CardDigitalAPI.Models.Buyer", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("CardDigitalAPI.Models.Card", b =>

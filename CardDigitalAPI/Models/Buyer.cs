@@ -13,6 +13,7 @@ namespace CardDigitalAPI.Models
 
         [StringLength(11)]
         public string? Cpf { get; set; }
+
         public ICollection<Client>? Clients { get; set; }
         public Buyer()
         {

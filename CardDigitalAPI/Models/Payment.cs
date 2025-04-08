@@ -15,7 +15,10 @@ namespace CardDigitalAPI.Models
 
         [StringLength(10)]
         public string? Type { get; set; }
+
         public bool? IsApproved { get; set; }
+
+        public DateTime CreateDate { get; set; }
 
         [ForeignKey("Buyer")]
         public int? BuyerId { get; set; }
