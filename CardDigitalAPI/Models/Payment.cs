@@ -18,7 +18,7 @@ namespace CardDigitalAPI.Models
 
         public bool? IsApproved { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } 
 
         [ForeignKey("Buyer")]
         public int? BuyerId { get; set; }

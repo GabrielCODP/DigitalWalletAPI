@@ -14,7 +14,7 @@ namespace CardDigitalAPI.DTOS.PaymentDTOs
         public bool? IsApproved { get; set; } = false;
 
         [JsonIgnore]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 
         [Required]
         public int BuyerId { get; set; }

@@ -7,6 +7,8 @@ namespace CardDigitalAPI.Repositories
     {
         public IClientRepository? _clientRepo;
         public IBuyerRepository? _buyerRepo;
+        public IPaymentRepository? _paymentRepo;
+        public IBoletoRepository? _boletoRepo;
 
         public AppDbContext _context;
 
@@ -34,7 +36,21 @@ namespace CardDigitalAPI.Repositories
             }
         }
 
+        public IPaymentRepository PaymentRepository
+        {
+            get
+            {
+                return _paymentRepo = _paymentRepo ?? new PaymentRepository(_context);
+            }
+        }
 
+        public IBoletoRepository BoletoRepository
+        {
+            get
+            {
+                return _boletoRepo = _boletoRepo ?? new BoletoRepository(_context);
+            }
+        }
 
         public async Task CommitAsync()
         {

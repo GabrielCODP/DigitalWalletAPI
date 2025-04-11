@@ -5,7 +5,8 @@
         //Instancia dos repositorios
         IClientRepository ClientRepository { get; }
         IBuyerRepository BuyerRepository { get; }
-
+        IPaymentRepository PaymentRepository { get; }
+        IBoletoRepository BoletoRepository { get; }
         Task CommitAsync();
     }
 }
